@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MYP Chemistry Mapping Grid</title>
+  <style>
+    :root{
+      --teal:#12b3b0;
+      --teal-dark:#0d6f7b;
+      --blue:#235d8c;
+      --navy:#24445c;
+      --green:#2f8f6b;
+      --orange:#e07a2d;
+      --purple:#7a5da9;
+      --red:#d65b57;
+      --pink:#c94c8a;
+      --text:#213547;
+      --muted:#5c6f7c;
+      --line:#d9e4ea;
+      --bg:#f5fbfc;
+      --white:#ffffff;
+      --shadow:0 10px 25px rgba(28,72,102,0.08);
+      --radius:18px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(18,179,176,0.12) 0, rgba(18,179,176,0.12) 120px, transparent 121px),
+        radial-gradient(circle at top right, rgba(35,93,140,0.08) 0, rgba(35,93,140,0.08) 120px, transparent 121px),
+        linear-gradient(180deg, #f9fdfd 0%, #eef7f9 100%);
+    }
+
+    .page{
+      max-width: 1450px;
+      margin: 0 auto;
+      padding: 36px 20px 56px;
+    }
+
+    .reference{
+      margin-bottom: 18px;
+      padding: 12px 16px;
+      background: #eef8f9;
+      border: 1px solid #cfe6ea;
+      border-left: 6px solid var(--teal);
+      border-radius: 14px;
+      color: var(--navy);
+      font-size: 14px;
+      line-height: 1.6;
+      box-shadow: var(--shadow);
+    }
+
+    .reference strong{
+      color: var(--teal-dark);
+    }
+
+    .hero{
+      position: relative;
+      background: linear-gradient(135deg, var(--teal-dark), var(--blue));
+      color: white;
+      border-radius: 28px;
+      padding: 34px 28px 28px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .hero::before,
+    .hero::after{
+      content:"";
+      position:absolute;
+      border-radius:50%;
+      background: rgba(255,255,255,0.08);
+    }
+
+    .hero::before{
+      width: 180px;
+      height: 180px;
+      top: -60px;
+      right: -20px;
+    }
+
+    .hero::after{
+      width: 120px;
+      height: 120px;
+      bottom: -30px;
+      left: -20px;
+    }
+
+    .eyebrow{
+      display:inline-block;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 1.4px;
+      background: rgba(255,255,255,0.14);
+      padding: 8px 12px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+    }
+
+    h1{
+      margin:0 0 10px;
+      font-size: clamp(32px, 5vw, 56px);
+      line-height:1.05;
+    }
+
+    .subtitle{
+      margin:0;
+      max-width: 980px;
+      font-size: clamp(16px, 2vw, 22px);
+      line-height:1.5;
+      color: rgba(255,255,255,0.94);
+    }
+
+    .intro{
+      display:grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 22px;
+      margin-top: 24px;
+    }
+
+    .card{
+      background: var(--white);
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .card h2{
+      margin:0 0 14px;
+      font-size: 24px;
+      color: var(--navy);
+    }
+
+    .card p{
+      margin:0;
+      line-height:1.65;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .topics-grid{
+      display:grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .topic-pill{
+      color:white;
+      padding: 14px 16px;
+      border-radius: 14px;
+      font-weight: 700;
+      min-height: 64px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      box-shadow: inset 0 -3px 0 rgba(255,255,255,0.12);
+    }
+
+    .topic-1{ background: linear-gradient(135deg, #1fb8b5, #167d95); }
+    .topic-2{ background: linear-gradient(135deg, #3e88c8, #305f9d); }
+    .topic-3{ background: linear-gradient(135deg, #8a6bc2, #5d4f9d); }
+    .topic-4{ background: linear-gradient(135deg, #f28a3a, #d0602a); }
+    .topic-5{ background: linear-gradient(135deg, #38a57f, #2f7f76); }
+    .topic-6{ background: linear-gradient(135deg, #c94c8a, #964f9d); }
+    .topic-7{ background: linear-gradient(135deg, #d65b57, #a94852); }
+
+    .section-title{
+      margin: 34px 0 16px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-size: 28px;
+      color: var(--navy);
+    }
+
+    .section-title .dot{
+      width: 14px;
+      height: 14px;
+      border-radius:50%;
+      background: var(--teal);
+      flex: 0 0 auto;
+    }
+
+    .organizer{
+      display:grid;
+      grid-template-columns: 300px minmax(420px, 1fr) 340px;
+      gap: 20px;
+      align-items:start;
+    }
+
+    .mini-heading{
+      margin:0 0 14px;
+      font-size:20px;
+      color: var(--navy);
+    }
+
+    .concept-box .venn{
+      position: relative;
+      height: 260px;
+      margin-top: 12px;
+    }
+
+    .circle{
+      position:absolute;
+      width: 140px;
+      height: 140px;
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      font-weight:700;
+      color:white;
+      padding:16px;
+      box-shadow: var(--shadow);
+    }
+
+    .circle.change{
+      left: 78px;
+      top: 6px;
+      background: rgba(25,165,177,0.88);
+    }
+
+    .circle.relationships{
+      left: 16px;
+      top: 102px;
+      background: rgba(38,93,140,0.88);
+      font-size: 24px;
+    }
+
+    .circle.systems{
+      left: 138px;
+      top: 102px;
+      background: rgba(53,143,107,0.88);
+      font-size: 28px;
+    }
+
+    .sequence{
+      display:flex;
+      flex-direction:column;
+      gap: 12px;
+      position:relative;
+    }
+
+    .seq-item{
+      position:relative;
+      padding: 16px 18px;
+      border-radius: 16px;
+      background: linear-gradient(180deg, #ffffff, #f4fafb);
+      border:1px solid var(--line);
+      font-weight:700;
+      color:var(--navy);
+      box-shadow: var(--shadow);
+      text-align:center;
+    }
+
+    .seq-item:not(:last-child)::after{
+      content:"↓";
+      position:absolute;
+      left:50%;
+      transform:translateX(-50%);
+      bottom:-26px;
+      color: var(--teal-dark);
+      font-size: 20px;
+      font-weight:700;
+    }
+
+    .support-list{
+      display:grid;
+      gap: 12px;
+    }
+
+    .support-card{
+      border:1px solid var(--line);
+      border-left: 6px solid var(--teal);
+      border-radius: 14px;
+      padding: 14px 14px 14px 16px;
+      background: linear-gradient(180deg, #fff, #f9fcfd);
+    }
+
+    .support-card h3{
+      margin:0 0 6px;
+      font-size:17px;
+      color:var(--navy);
+    }
+
+    .support-card p{
+      margin:0;
+      font-size:14px;
+      line-height:1.55;
+      color:var(--muted);
+    }
+
+    .chapters{
+      margin-top: 30px;
+    }
+
+    .chapter-grid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .chapter-card{
+      background: var(--white);
+      border:1px solid var(--line);
+      border-radius: 18px;
+      overflow:hidden;
+      box-shadow: var(--shadow);
+      display:flex;
+      flex-direction:column;
+      min-height: 100%;
+    }
+
+    .chapter-head{
+      display:flex;
+      align-items:center;
+      gap: 12px;
+      padding: 14px 16px;
+      color:white;
+      background: linear-gradient(135deg, var(--blue), var(--teal-dark));
+    }
+
+    .chapter-number{
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.18);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size: 20px;
+      font-weight: 800;
+      flex: 0 0 auto;
+    }
+
+    .chapter-title{
+      font-size: 22px;
+      font-weight: 800;
+      line-height: 1.1;
+    }
+
+    .chapter-body{
+      padding: 16px;
+      display:grid;
+      gap: 14px;
+    }
+
+    .info-block{
+      border:1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px 12px 10px;
+      background: #fbfefe;
+    }
+
+    .label{
+      display:inline-block;
+      font-size: 12px;
+      letter-spacing: .8px;
+      text-transform: uppercase;
+      font-weight: 800;
+      color: var(--teal-dark);
+      margin-bottom: 8px;
+    }
+
+    ul{
+      margin:0;
+      padding-left: 18px;
+    }
+
+    li{
+      margin: 0 0 6px;
+      line-height:1.45;
+      color: var(--text);
+    }
+
+    .key-badge{
+      display:inline-block;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: #e8f7f6;
+      color: var(--teal-dark);
+      font-weight: 700;
+      border: 1px solid #c7e8e6;
+    }
+
+    .gc{
+      color: var(--blue);
+      font-weight: 700;
+    }
+
+    .soi{
+      color: var(--text);
+      line-height:1.55;
+    }
+
+    .atl-list li{
+      color: var(--muted);
+    }
+
+    @media (max-width: 1100px){
+      .intro,
+      .organizer,
+      .chapter-grid{
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 700px){
+      .topics-grid{
+        grid-template-columns: 1fr;
+      }
+
+      .page{
+        padding: 18px 12px 34px;
+      }
+
+      .hero{
+        padding: 24px 18px 22px;
+      }
+
+      .card{
+        padding: 16px;
+      }
+
+      .chapter-head{
+        align-items:flex-start;
+      }
+
+      .circle{
+        width: 120px;
+        height: 120px;
+        font-size: 20px !important;
+      }
+
+      .circle.change{
+        left: 70px;
+      }
+
+      .circle.relationships{
+        left: 0;
+      }
+
+      .circle.systems{
+        left: 120px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="reference">
+      <strong>Reference:</strong> Adapted from <em>MYP Chemistry: A Concept Based Approach</em> by Gary Horner, Oxford University Press.
+    </div>
+
+    <section class="hero">
+      <div class="eyebrow">MYP Sciences · Chemistry</div>
+      <h1>MYP Chemistry Mapping Grid</h1>
+      <p class="subtitle">
+        A graphic organizer showing how broad chemistry topics, chapter content, key concepts,
+        global contexts, statements of inquiry, and ATL skills connect across the course.
+      </p>
+    </section>
+
+    <section class="intro">
+      <div class="card">
+        <h2>Overview</h2>
+        <p>
+          The MYP eAssessment subject list for Chemistry consists of seven broad topics.
+          These topics are further broken down into sub-topics, and the mapping grid below
+          gives an overview of where they are covered within the book. It also shows which
+          key concept, global context, and statement of inquiry guide learning in each chapter.
+        </p>
+      </div>
+
+      <div class="card">
+        <h2>MYP Chemistry eAssessment Topics</h2>
+        <div class="topics-grid">
+          <div class="topic-pill topic-1">Periodic table</div>
+          <div class="topic-pill topic-2">IUPAC</div>
+          <div class="topic-pill topic-3">The atmosphere</div>
+          <div class="topic-pill topic-4">Matter</div>
+          <div class="topic-pill topic-5">Pure and impure substances</div>
+          <div class="topic-pill topic-6">Bonding</div>
+          <div class="topic-pill topic-7" style="grid-column: 1 / -1;">Types of chemical reaction</div>
+        </div>
+      </div>
+    </section>
+
+    <h2 class="section-title"><span class="dot"></span> Conceptual Organizer</h2>
+    <section class="organizer">
+      <div class="card concept-box">
+        <h3 class="mini-heading">Key Concepts in MYP Sciences</h3>
+        <div class="venn">
+          <div class="circle change">Change</div>
+          <div class="circle relationships">Relationships</div>
+          <div class="circle systems">Systems</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="mini-heading">Course Mapping Logic</h3>
+        <div class="sequence">
+          <div class="seq-item">Chapter / Unit</div>
+          <div class="seq-item">Topics Covered</div>
+          <div class="seq-item">Key Concept</div>
+          <div class="seq-item">Global Context</div>
+          <div class="seq-item">Statement of Inquiry</div>
+          <div class="seq-item">ATL Skills</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="mini-heading">How to Read This Organizer</h3>
+        <div class="support-list">
+          <div class="support-card">
+            <h3>Content Coverage</h3>
+            <p>Each chapter groups sub-topics from the seven broad eAssessment areas.</p>
+          </div>
+          <div class="support-card">
+            <h3>Conceptual Framing</h3>
+            <p>Each chapter is linked to a key concept: Relationships, Change, or Systems.</p>
+          </div>
+          <div class="support-card">
+            <h3>Inquiry Alignment</h3>
+            <p>Global context, statement of inquiry, and ATL skills guide how learning is structured.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="chapters">
+      <h2 class="section-title"><span class="dot"></span> Chapter-by-Chapter Mapping</h2>
+      <div class="chapter-grid">
+
+        <article class="chapter-card">
+          <div class="chapter-head">
+            <div class="chapter-number">1</div>
+            <div class="chapter-title">Balance</div>
+          </div>
+          <div class="chapter-body">
+            <div class="info-block">
+              <div class="label">Topics Covered</div>
+              <ul>
+                <li>Chemical formula</li>
+                <li>Chemical reactions and the conservation of mass</li>
+                <li>Balancing equations</li>
+                <li>Reversible reactions</li>
+              </ul>
+            </div>
+            <div class="info-block">
+              <div class="label">Key Concept</div>
+              <div class="key-badge">Relationships</div>
+            </div>
+            <div class="info-block">
+              <div class="label">Global Context</div>
+              <div class="gc">Fairness and development</div>
+            </div>
+            <div class="info-block">
+              <div class="label">Statement of Inquiry</div>
+              <div class="soi">Imbalanced relationships affect finite resources, both locally and globally.</div>
+            </div>
+            <div class="info-block">
+              <div class="label">ATL Skills</div>
+              <ul class="atl-list">
+                <li>Reflective skills: Develop new skills, techniques and strategies for effective learning</li>
+                <li>Thinking in context: Finite resources</li>
+                <li>Information literacy and communication skills: Read critically and for comprehension</li>
+                <li>Thinking in context: Fairness and development</li>
+                <li>Thinking in context: Monocultures and food security</li>
+                <li>Thinking in context: Fertilizers vs. pesticides, and CCD</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="chapter-card">
+          <div class="chapter-head">
+            <div class="chapter-number">2</div>
+            <div class="chapter-title">Evidence</div>
+          </div>
+          <div class="chapter-body">
+            <div class="info-block">
+              <div class="label">Topics Covered</div>
+              <ul>
+                <li>Metals and non-metals</li>
+                <li>Transition metals</li>
+                <li>Noble gases</li>
+                <li>Fractional distillation of crude oil</li>
+                <li>Alkanes, alkenes, alcohols</li>
+                <li>Atmospheric composition</li>
+              </ul>
+            </div>
+            <div class="info-block">
+              <div class="label">Key Concept</div>
+              <div class="key-badge">Relationships</div>
+            </div>
+            <div class="info-block">
+              <div class="label">Global Context</div>
+              <div class="gc">Scientific and technical innovation</div>
+            </div>
+            <div class="info-block">
+              <div class="label">Statement of Inquiry</div>
+              <div class="soi">Our ability to collect evidence improves with advances in science and technical innovations.</div>
+            </div>
+            <div class="info-block">
+              <div class="label">ATL Skills</div>
+              <ul class="atl-list">
+                <li>Critical thinking skills: Using inductive and deductive reasoning</li>
+                <li>Critical thinking skills: Understanding based on new information and evidence</li>
+                <li>Information and media literacy: Communicate information and ideas effectively</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="chapter-card">
+          <div class="chapter-head">
+            <div class="chapter-number">3</div>
+            <div class="chapter-title">Consequences</div>
+          </div>
+          <div class="chapter-body">
+            <div class="info-block">
+              <div class="label">Topics Covered</div>
+              <ul>
+                <li>Acids and bases</li>
+                <li>Neutral solutions</li>
+                <li>Acid/base reactions, pH and indicators</li>
+                <li>Formation of salts</li>
+                <li>Reactivity series</li>
+                <li>Emissions and environmental implications</li>
+              </ul>
+            </div>
+            <div class="info-block">
+              <div class="label">Key Concept</div>
+              <div class="key-badge">Change</div>
+            </div>
+            <div class="info-block">
+              <div class="label">Global Context</div>
+              <div class="gc">Globalization and sustainability</div>
+            </div>
+            <div class="info-block">
+              <div class="label">Statement of Inquiry</div>
+              <div class="soi">Change as a consequence of human development can be identified within all environments on our planet.</div>
+            </div>
+            <div class="info-block">
+              <div class="label">ATL Skills</div>
+              <ul class="atl-list">
+                <li>Critical thinking skills: Analysing and evaluating issues and ideas</li>
+                <li>Thinking in context: Rising sea levels</li>
+                <li>Thinking in context: Battery disposal</li>
+                <li>Thinking in context: Carbon dioxide emissions</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="chapter-card">
+          <div class="chapter-head">
+            <div class="chapter-number">4</div>
+            <div class="chapter-title">Energy</div>
+          </div>
+          <div class="chapter-body">
+            <div class="info-block">
+              <div class="label">Topics Covered</div>
+              <ul>
+                <li>Endothermic and exothermic reactions</li>
+                <li>Energy changes in a reaction</li>
+                <li>States and properties of matter</li>
+                <li>Combustion of fuel</li>
+              </ul>
+            </div>
+            <div class="info-block">
+              <div class="label">Key Concept</div>
+              <div class="key-badge">Change</div>
+            </div>
+            <div class="info-block">
+              <div class="label">Global Context</div>
+              <div class="gc">Scientific and technical innovation</div>
+            </div>
+            <div class="info-block">
+              <div class="label">Statement of Inquiry</div>
+              <div class="soi">Scientific and technological advances can enable functional energy transformations within, and between, systems.</div>
+            </div>
+            <div class="info-block">
+              <div class="label">ATL Skills</div>
+              <ul class="atl-list">
+                <li>Thinking in context: Is our increasing energy usage sustainable?</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="chapter-card">
+          <div class="chapter-head">
+            <div class="chapter-number">5</div>
+            <div class="chapter-title">Conditions</div>
+          </div>
+          <div class="chapter-body">
+            <div class="info-block">
+              <div class="label">Topics Covered</div>
+              <ul>
+                <li>Collision theory</li>
+                <li>Chemical reaction kinetics rates</li>
+                <li>Factors affecting rates – temperature, concentration, surface area, catalysts</li>
+              </ul>
+            </div>
+            <div class="info-block">
+              <div class="label">Key Concept</div>
+              <div class="key-badge">Systems</div>
+            </div>
+            <div class="info-block">
+              <div class="label">Global Context</div>
+              <div class="gc">Scientific and technical innovation</div>
+            </div>
+            <div class="info-block">
+              <div class="label">Statement of Inquiry</div>
+              <div class="soi">Scientific innovations advance a scientist’s ability to monitor changes in conditions and the effect they have on the rate of a chemical reaction.</div>
+            </div>
+            <div class="info-block">
+              <div class="label">ATL Skills</div>
+              <ul class="atl-list">
+                <li>Critical thinking skills: Revising your understanding based on new information and evidence</li>
+                <li>Critical thinking skills: Evaluating evidence and arguments</li>
+                <li>Reflective skills: Considering content</li>
+                <li>Research skills: Gathering and organizing relevant information</li>
+                <li>Research skills: Presenting information and data using models and mathematical relationships</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="chapter-card">
+          <div class="chapter-head">
+            <div class="chapter-number">6</div>
+            <div class="chapter-title">Form</div>
+          </div>
+          <div class="chapter-body">
+            <div class="info-block">
+              <div class="label">Topics Covered</div>
+              <ul>
+                <li>States and properties of matter</li>
+                <li>Characteristics of gases</li>
+                <li>Solutions, colloids and suspensions</li>
+                <li>Filtration and fractional distillation</li>
+              </ul>
+            </div>
+            <div class="info-block">
+              <div class="label">Key Concept</div>
+              <div class="key-badge">Relationships</div>
+            </div>
+            <div class="info-block">
+              <div class="label">Global Context</div>
+              <div class="gc">Identities and relationships</div>
+            </div>
+            <div class="info-block">
+              <div class="label">Statement of Inquiry</div>
+              <div class="soi">Observing and describing the properties of a substance helps us to understand its identity and how it interacts with the environment.</div>
+            </div>
+            <div class="info-block">
+              <div class="label">ATL Skills</div>
+              <ul class="atl-list">
+                <li>Communication skills: Organize and depict information logically</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="chapter-card">
+          <div class="chapter-head">
+            <div class="chapter-number">7</div>
+            <div class="chapter-title">Function</div>
+          </div>
+          <div class="chapter-body">
+            <div class="info-block">
+              <div class="label">Topics Covered</div>
+              <ul>
+                <li>Formation of salts</li>
+                <li>Filtration, distillation and chromatography</li>
+                <li>The mole concept and chemical calculations</li>
+              </ul>
+            </div>
+            <div class="info-block">
+              <div class="label">Key Concept</div>
+              <div class="key-badge">Relationships</div>
+            </div>
+            <div class="info-block">
+              <div class="label">Global Context</div>
+              <div class="gc">Globalization and sustainability</div>
+            </div>
+            <div class="info-block">
+              <div class="label">Statement of Inquiry</div>
+              <div class="soi">The way in which matter functions is dependent on its properties and the relationship of the different systems within the environment.</div>
+            </div>
+            <div class="info-block">
+              <div class="label">ATL Skills</div>
+              <ul class="atl-list">
+                <li>Information literacy skills: Finding, interpreting, judging and creating information</li>
+                <li>Information and media literacy skills: Locate, evaluate, synthesize information from a variety of sources</li>
+                <li>Reflection skills: Consider ideas from multiple perspectives</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="chapter-card">
+          <div class="chapter-head">
+            <div class="chapter-number">8</div>
+            <div class="chapter-title">Interaction</div>
+          </div>
+          <div class="chapter-body">
+            <div class="info-block">
+              <div class="label">Topics Covered</div>
+              <ul>
+                <li>Redox reactions</li>
+                <li>Corrosion</li>
+                <li>Combustion of fuels</li>
+                <li>Emission and environmental implications</li>
+                <li>Formation of salts</li>
+                <li>Reactivity series</li>
+              </ul>
+            </div>
+            <div class="info-block">
+              <div class="label">Key Concept</div>
+              <div class="key-badge">Systems</div>
+            </div>
+            <div class="info-block">
+              <div class="label">Global Context</div>
+              <div class="gc">Globalization and sustainability</div>
+            </div>
+            <div class="info-block">
+              <div class="label">Statement of Inquiry</div>
+              <div class="soi">The interactions between substances can sometimes be understood and predicted by examining the underlying processes.</div>
+            </div>
+            <div class="info-block">
+              <div class="label">ATL Skills</div>
+              <ul class="atl-list">
+                <li>Information literacy skills: Process data and report results</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="chapter-card">
+          <div class="chapter-head">
+            <div class="chapter-number">9</div>
+            <div class="chapter-title">Models</div>
+          </div>
+          <div class="chapter-body">
+            <div class="info-block">
+              <div class="label">Topics Covered</div>
+              <ul>
+                <li>Structure and bonding</li>
+                <li>Electron configuration and valency</li>
+                <li>Properties of elements and compounds</li>
+                <li>Chemical formulae</li>
+                <li>Alloys</li>
+              </ul>
+            </div>
+            <div class="info-block">
+              <div class="label">Key Concept</div>
+              <div class="key-badge">Systems</div>
+            </div>
+            <div class="info-block">
+              <div class="label">Global Context</div>
+              <div class="gc">Orientation in space and time</div>
+            </div>
+            <div class="info-block">
+              <div class="label">Statement of Inquiry</div>
+              <div class="soi">Molecular modelling is used for the visualization of chemical structures, displaying their orientation in space and time.</div>
+            </div>
+            <div class="info-block">
+              <div class="label">ATL Skills</div>
+              <ul class="atl-list">
+                <li>Creative thinking skills: Apply existing knowledge to generate new ideas, products or processes</li>
+                <li>Thinking in context: Assigning valence electrons of an element using the periodic table</li>
+                <li>Communication skills: Read critically and for comprehension</li>
+                <li>Critical thinking skills: Combine knowledge and understanding to create new perspectives</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="chapter-card">
+          <div class="chapter-head">
+            <div class="chapter-number">10</div>
+            <div class="chapter-title">Movement</div>
+          </div>
+          <div class="chapter-body">
+            <div class="info-block">
+              <div class="label">Topics Covered</div>
+              <ul>
+                <li>Redox reactions</li>
+                <li>Reactivity series</li>
+                <li>Electrochemical cell</li>
+                <li>Uses of salts</li>
+                <li>Corrosion</li>
+                <li>Extraction</li>
+                <li>Extraction of metals</li>
+                <li>Diffusion</li>
+              </ul>
+            </div>
+            <div class="info-block">
+              <div class="label">Key Concept</div>
+              <div class="key-badge">Change</div>
+            </div>
+            <div class="info-block">
+              <div class="label">Global Context</div>
+              <div class="gc">Scientific and technical innovation</div>
+            </div>
+            <div class="info-block">
+              <div class="label">Statement of Inquiry</div>
+              <div class="soi">The changes we observe in a chemical system can help us to infer information about the movement of molecules and their properties.</div>
+            </div>
+            <div class="info-block">
+              <div class="label">ATL Skills</div>
+              <ul class="atl-list">
+                <li>Thinking in context: Utilizing the voltaic cell</li>
+                <li>Information literacy skills: Collect, organize and present information</li>
+                <li>Thinking in context: Electroplating</li>
+                <li>Critical thinking skills: Evaluate evidence</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="chapter-card">
+          <div class="chapter-head">
+            <div class="chapter-number">11</div>
+            <div class="chapter-title">Patterns</div>
+          </div>
+          <div class="chapter-body">
+            <div class="info-block">
+              <div class="label">Topics Covered</div>
+              <ul>
+                <li>Periodic trends – groups and periods</li>
+                <li>Atomic structure</li>
+                <li>Electronic configuration and valency</li>
+                <li>Acid and base characteristics</li>
+              </ul>
+            </div>
+            <div class="info-block">
+              <div class="label">Key Concept</div>
+              <div class="key-badge">Relationships</div>
+            </div>
+            <div class="info-block">
+              <div class="label">Global Context</div>
+              <div class="gc">Orientation in space and time</div>
+            </div>
+            <div class="info-block">
+              <div class="label">Statement of Inquiry</div>
+              <div class="soi">Chemists look for patterns in the periodic table in order to discover relationships and trends that help them to predict physical and chemical properties.</div>
+            </div>
+            <div class="info-block">
+              <div class="label">ATL Skills</div>
+              <ul class="atl-list">
+                <li>Information literacy and communication skills: Communicate information and ideas effectively to multiple audiences</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="chapter-card">
+          <div class="chapter-head">
+            <div class="chapter-number">12</div>
+            <div class="chapter-title">Transfer</div>
+          </div>
+          <div class="chapter-body">
+            <div class="info-block">
+              <div class="label">Topics Covered</div>
+              <ul>
+                <li>The mole concept and chemical calculations – concentration</li>
+                <li>Acid–base reactions, pH, titrations and indicators</li>
+                <li>Structural formulae – carboxylic acids and esters</li>
+              </ul>
+            </div>
+            <div class="info-block">
+              <div class="label">Key Concept</div>
+              <div class="key-badge">Change</div>
+            </div>
+            <div class="info-block">
+              <div class="label">Global Context</div>
+              <div class="gc">Scientific and technical innovation</div>
+            </div>
+            <div class="info-block">
+              <div class="label">Statement of Inquiry</div>
+              <div class="soi">Technological advances in analytical devices enhance the ability of scientists to monitor the transfer of matter when changes occur during chemical reactions.</div>
+            </div>
+            <div class="info-block">
+              <div class="label">ATL Skills</div>
+              <ul class="atl-list">
+                <li>Information literacy skills: Finding, interpreting, judging and creating information</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+  </div>
+</body>
+</html>
